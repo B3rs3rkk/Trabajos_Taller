@@ -19,7 +19,7 @@
    <children>
       <ImageView fitHeight="483.0" fitWidth="859.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../images/2.png" />
+            <Image url="@../images/222222222222222222222222222.png" />
          </image>
       </ImageView>
       <TableView fx:id="tblClientes" layoutX="14.0" layoutY="199.0" prefHeight="261.0" prefWidth="693.0" styleClass="Button1" stylesheets="@../resource/KinalExpresCSS.css">
