@@ -31,7 +31,18 @@ public class GenerarReportes {
                 e.printStackTrace();
         }
     }
-    
+    public static void mostrarReportesProveedor(String nombreReporte, String titulo, Map parametros){
+        InputStream reporte = GenerarReportes.class.getResourceAsStream(nombreReporte);
+        try{
+            JasperReport ReporteProveedores = (JasperReport) JRLoader.loadObject(reporte);
+            JasperPrint reporteimpreso = JasperFillManager.fillReport(ReporteProveedores, parametros, Conexion.getInstance().getConexion());
+            JasperViewer visor = new JasperViewer(reporteimpreso, false);
+            visor.setTitle(titulo);
+            visor.setVisible(true);
+        }catch (Exception e){
+                e.printStackTrace();
+        }
+    }
 }
 
 /*
