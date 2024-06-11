@@ -22,8 +22,8 @@ public class GenerarReportes {
     public static void mostrarReportes(String nombreReporte, String titulo, Map parametros){
         InputStream reporte = GenerarReportes.class.getResourceAsStream(nombreReporte);
         try{
-            JasperReport ReporteClientes2 = (JasperReport) JRLoader.loadObject(reporte);
-            JasperPrint reporteimpreso = JasperFillManager.fillReport(ReporteClientes2, parametros, Conexion.getInstance().getConexion());
+            JasperReport ReporteCliente2 = (JasperReport) JRLoader.loadObject(reporte);
+            JasperPrint reporteimpreso = JasperFillManager.fillReport(ReporteCliente2, parametros, Conexion.getInstance().getConexion());
             JasperViewer visor = new JasperViewer(reporteimpreso, false);
             visor.setTitle(titulo);
             visor.setVisible(true);
