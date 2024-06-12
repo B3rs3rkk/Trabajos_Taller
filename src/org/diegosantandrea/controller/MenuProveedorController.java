@@ -353,7 +353,7 @@ public void reporte(){
     public void imprimirReporte(){
         Map parametros = new HashMap();
         parametros.put("codigoProveedor", null);
-        GenerarReportes.mostrarReportes("Proveedores.jasper", "reporte de Clientes", parametros);
+        GenerarReportes.mostrarReportes("Proveedores.jasper", "reporte de proveedor", parametros);
     }
     @FXML
     public void handleButtonAction(ActionEvent event) {

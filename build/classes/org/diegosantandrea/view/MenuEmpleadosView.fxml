@@ -130,7 +130,7 @@
                <GridPane.margin>
                   <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
                </GridPane.margin></Button>
-            <Button fx:id="btnReporte" alignment="CENTER_RIGHT" mnemonicParsing="false" prefHeight="61.0" prefWidth="171.0" style="-fx-background-color: #FEE48A;" text="Reporte" GridPane.columnIndex="3">
+            <Button fx:id="btnReporte" alignment="CENTER_RIGHT" mnemonicParsing="false" onAction="#reporte" prefHeight="61.0" prefWidth="171.0" style="-fx-background-color: #FEE48A;" text="Reporte" GridPane.columnIndex="3">
                <effect>
                   <DropShadow />
                </effect>

@@ -5,6 +5,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -23,6 +25,7 @@ import javax.swing.JOptionPane;
 import org.diegosantandrea.bean.CargoEmpleado;
 import org.diegosantandrea.bean.Empleados;
 import org.diegosantandrea.db.Conexion;
+import org.diegosantandrea.reportes.GenerarReportes;
 import org.diegosantandrea.system.Principal;
 
 public class MenuEmpleadoController implements Initializable {
@@ -31,7 +34,7 @@ public class MenuEmpleadoController implements Initializable {
     private Principal escenarioPrincipal;
 
     private enum operaciones {
-        AGREGAR, ELIMINAR, EDITAR, ACTUALIZAR, CANCELAR, NULL
+        AGREGAR, ELIMINAR, EDITAR, ACTUALIZAR, CANCELAR, NULL, NINGUNO
     }
 
     private operaciones tipoDeOperaciones = operaciones.NULL;
@@ -378,6 +381,28 @@ public class MenuEmpleadoController implements Initializable {
         }
         return null;
     }
+    
+     public void reporte(){
+        switch (tipoDeOperaciones) {
+            case NINGUNO:
+                imprimirReporte();
+                break;
+            case ACTUALIZAR:
+                desactivarControles();
+                limpiarControles();
+                btnEditar.setText("Editar");
+                btnReporte.setText("Reportes");
+                btnAgregar.setDisable(false);
+                btnEliminar.setDisable(false);
+                tipoDeOperaciones = MenuEmpleadoController.operaciones.NINGUNO;
+        }
+    }
+     public void imprimirReporte(){
+        Map parametros = new HashMap();
+        parametros.put("codigoEmpleado", null);
+        GenerarReportes.mostrarReportesEmpleados("Empleado.jasper", "reporte de Empleado", parametros);
+    }
+    
     
     @FXML
     public void handleButtonAction(ActionEvent event) {

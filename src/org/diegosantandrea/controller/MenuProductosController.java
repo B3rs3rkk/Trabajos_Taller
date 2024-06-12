@@ -6,6 +6,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -25,6 +27,7 @@ import org.diegosantandrea.bean.Productos;
 import org.diegosantandrea.bean.Proveedor;
 import org.diegosantandrea.bean.TipoDeProducto;
 import org.diegosantandrea.db.Conexion;
+import org.diegosantandrea.reportes.GenerarReportes;
 import org.diegosantandrea.system.Principal;
 
 public class MenuProductosController implements Initializable {
@@ -35,7 +38,7 @@ public class MenuProductosController implements Initializable {
     private Principal escenarioPrincipal;
 
     private enum operaciones {
-        AGREGAR, ELIMINAR, EDITAR, ACTUALIZAR, CANCELAR, NULL
+        AGREGAR, ELIMINAR, EDITAR, ACTUALIZAR, CANCELAR, NULL, NINGUNO
     }
 
     private operaciones tipoDeOperaciones = operaciones.NULL;
@@ -72,7 +75,7 @@ public class MenuProductosController implements Initializable {
     @FXML
     private Button btnEliminar;
     @FXML
-    private Button btnReporte;
+    private Button btnReportesProductos;
     @FXML
     private TextField txtCodigoProd;
     @FXML
@@ -196,7 +199,7 @@ public class MenuProductosController implements Initializable {
                 btnAgregar.setText("Guardar");
                 btnEliminar.setText("Cancelar");
                 btnEditar.setDisable(true);
-                btnReporte.setDisable(true);
+                btnReportesProductos.setDisable(true);
                 imgAgregar.setImage(new Image("/org/diegosantandrea/images/guardar.png"));
                 imgEliminar.setImage(new Image("/org/diegosantandrea/images/cancelar.png"));
                 tipoDeOperaciones = operaciones.AGREGAR;
@@ -210,7 +213,7 @@ public class MenuProductosController implements Initializable {
                     btnAgregar.setText("Agregar");
                     btnEliminar.setText("Eliminar");
                     btnEditar.setDisable(false);
-                    btnReporte.setDisable(false);
+                    btnReportesProductos.setDisable(false);
                     imgAgregar.setImage(new Image("/org/diegosantandrea/images/agregar-producto.png"));
                     imgEliminar.setImage(new Image("/org/diegosantandrea/images/carpeta.png"));
                     tipoDeOperaciones = operaciones.NULL;
@@ -300,7 +303,7 @@ public class MenuProductosController implements Initializable {
                     cmbCodigoTipoProducto.getSelectionModel().select((productoSeleccionado.getCodigoTipoProducto()));
                     cmbCodigoProveedor.getSelectionModel().select((productoSeleccionado.getCodigoProveedor()));
                     btnEditar.setText("Actualizar");
-                    btnReporte.setText("Cancelar");
+                    btnReportesProductos.setText("Cancelar");
                     btnAgregar.setDisable(true);
                     btnEliminar.setDisable(true);
                     imgEditar.setImage(new Image("/org/diegosantandrea/images/guardar.png"));
@@ -314,7 +317,7 @@ public class MenuProductosController implements Initializable {
             case ACTUALIZAR:
                 actualizar();
                 btnEditar.setText("Editar");
-                btnReporte.setText("Reportes");
+                btnReportesProductos.setText("Reportes");
                 btnAgregar.setDisable(false);
                 btnEliminar.setDisable(false);
                 desactivarControles();
@@ -357,7 +360,7 @@ public class MenuProductosController implements Initializable {
             btnAgregar.setText("Agregar");
             btnEliminar.setText("Eliminar");
             btnEditar.setDisable(false);
-            btnReporte.setDisable(false);
+            btnReportesProductos.setDisable(false);
             imgAgregar.setImage(new Image("/org/diegosantandrea/images/guardar.png"));
             imgEliminar.setImage(new Image("/org/diegosantandrea/images/cancelar.png"));
             tipoDeOperaciones = operaciones.NULL;
@@ -424,7 +427,28 @@ public class MenuProductosController implements Initializable {
         this.escenarioPrincipal = escenarioPrincipal;
     }
 
+      public void reporte(){
+        switch (tipoDeOperaciones) {
+            case NINGUNO:
+                imprimirReporte();
+                break;
+            case ACTUALIZAR:
+                desactivarControles();
+                limpiarControles();
+                btnEditar.setText("Editar");
+                btnReportesProductos.setText("Reportes");
+                btnAgregar.setDisable(false);
+                btnEliminar.setDisable(false);
+                tipoDeOperaciones = MenuProductosController.operaciones.NINGUNO;
+        }
+    }
+     public void imprimirReporte(){
+        Map parametros = new HashMap();
+        parametros.put("codigoProducto", null);
+        GenerarReportes.mostrarReportesProductos("Productos.jasper", "reporte de Producto", parametros);
+    }
     
+
 
     @FXML
     public void handleButtonAction(ActionEvent event) {

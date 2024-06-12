@@ -43,7 +43,35 @@ public class GenerarReportes {
                 e.printStackTrace();
         }
     }
+     public static void mostrarReportesProductos(String nombreReporte, String titulo, Map parametros){
+        InputStream reporte = GenerarReportes.class.getResourceAsStream(nombreReporte);
+        try{
+            JasperReport Productos = (JasperReport) JRLoader.loadObject(reporte);
+            JasperPrint reporteimpreso = JasperFillManager.fillReport(Productos, parametros, Conexion.getInstance().getConexion());
+            JasperViewer visor = new JasperViewer(reporteimpreso, false);
+            visor.setTitle(titulo);
+            visor.setVisible(true);
+        }catch (Exception e){
+                e.printStackTrace();
+        }
+    }
+      public static void mostrarReportesEmpleados(String nombreReporte, String titulo, Map parametros){
+        InputStream reporte = GenerarReportes.class.getResourceAsStream(nombreReporte);
+        try{
+            JasperReport Empleado = (JasperReport) JRLoader.loadObject(reporte);
+            JasperPrint reporteimpreso = JasperFillManager.fillReport(Empleado, parametros, Conexion.getInstance().getConexion());
+            JasperViewer visor = new JasperViewer(reporteimpreso, false);
+            visor.setTitle(titulo);
+            visor.setVisible(true);
+        }catch (Exception e){
+                e.printStackTrace();
+        }
+    }
 }
+   
+
+   
+   
 
 /*
  HasMap es uno de los objeptos que implementa un conjunfo de key-value
