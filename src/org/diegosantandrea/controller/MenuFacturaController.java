@@ -6,6 +6,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -25,6 +27,7 @@ import org.diegosantandrea.bean.Clientes;
 import org.diegosantandrea.bean.Empleados;
 import org.diegosantandrea.bean.Factura;
 import org.diegosantandrea.db.Conexion;
+import org.diegosantandrea.reportes.GenerarReportes;
 import org.diegosantandrea.system.Principal;
 
 public class MenuFacturaController implements Initializable {
@@ -425,7 +428,28 @@ public class MenuFacturaController implements Initializable {
         this.escenarioPrincipal = escenarioPrincipal;
     }
 
-    
+    public void reporte(){
+        switch (tipoDeOperaciones) {
+            case NULL:
+                imprimirReporte();
+                break;
+            case ACTUALIZAR:
+                desactivarControles();
+                limpiarControles();
+                btnEliminar.setText("Editar");
+                btnReporte.setText("Reportes");
+                btnAgregar.setDisable(false);
+                btnEliminar.setDisable(false);
+                tipoDeOperaciones = MenuFacturaController.operaciones.NULL;
+        }
+    }
+
+    public void imprimirReporte(){
+        Map parametros = new HashMap();
+        int factID = ((Factura)tvFactura.getSelectionModel().getSelectedItem()).getNumeroFactura();
+        parametros.put("factID", factID);
+        GenerarReportes.mostrarReportesFactura("Factura.jasper", "reporte De Factura", parametros);
+    }
 
     @FXML
     public void handleButtonAction(ActionEvent event) {

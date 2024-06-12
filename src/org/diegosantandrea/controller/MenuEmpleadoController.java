@@ -34,7 +34,7 @@ public class MenuEmpleadoController implements Initializable {
     private Principal escenarioPrincipal;
 
     private enum operaciones {
-        AGREGAR, ELIMINAR, EDITAR, ACTUALIZAR, CANCELAR, NULL, NINGUNO
+        AGREGAR, ELIMINAR, EDITAR, ACTUALIZAR, CANCELAR, NULL, 
     }
 
     private operaciones tipoDeOperaciones = operaciones.NULL;
@@ -384,7 +384,7 @@ public class MenuEmpleadoController implements Initializable {
     
      public void reporte(){
         switch (tipoDeOperaciones) {
-            case NINGUNO:
+            case NULL:
                 imprimirReporte();
                 break;
             case ACTUALIZAR:
@@ -394,7 +394,7 @@ public class MenuEmpleadoController implements Initializable {
                 btnReporte.setText("Reportes");
                 btnAgregar.setDisable(false);
                 btnEliminar.setDisable(false);
-                tipoDeOperaciones = MenuEmpleadoController.operaciones.NINGUNO;
+                tipoDeOperaciones = MenuEmpleadoController.operaciones.NULL;
         }
     }
      public void imprimirReporte(){
